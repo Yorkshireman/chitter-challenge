@@ -1,6 +1,4 @@
 feature 'User Management' do
-  include Rack::Test::Methods
-
   def sign_up(user)
     visit '/users/new'
     fill_in :email, with: user.email
@@ -28,10 +26,12 @@ feature 'User Management' do
     end
 
     scenario 'user is not redirected' do
-      expect(current_path).to eq '/users/new'
+      expect(current_path).to eq '/users/'
     end
 
-    scenario "user is alerted with a flash message that the email already exists"
+    scenario 'user is alerted with a flash message that the email already exists'  do
+      expect(page).to have_content 'Email is already taken'
+    end
   end
 
   context 'after successful sign-up' do

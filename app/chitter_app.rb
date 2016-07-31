@@ -1,10 +1,11 @@
 require 'sinatra/base'
-# require 'byebug'
 require_relative 'datamapper_setup.rb'
+require 'rack-flash'
 
 class Chitter < Sinatra::Base
   enable :sessions unless test?
   set :session_secret, 'super secret'
+  use Rack::Flash, sweep: true
 
   get '/' do
     @peeps = Peep.all.reverse
@@ -16,7 +17,6 @@ class Chitter < Sinatra::Base
   end
 
   post '/peeps/' do
-    #Peep.create(content: params['content'], user_id: current_user.id)
     current_user.peeps.create(content: params['content'])
     redirect to('/')
   end
@@ -26,12 +26,13 @@ class Chitter < Sinatra::Base
   end
 
   post '/users/' do
-    user = User.new email: params['email'], password: params['password']
+    user = User.new(email: params['email'], password: params['password'])
     if user.save
       session[:user_id] = user.id
       redirect to('/')
     else
-      redirect to('/users/new')
+      erb :'users/new'
+      flash[:notice] = "#{user.errors[:email]}"
     end
   end
 
