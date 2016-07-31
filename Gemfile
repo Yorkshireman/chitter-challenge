@@ -20,9 +20,10 @@ group :test do
   gem 'launchy'
   gem 'rack-test'
   gem 'dm-rspec'
+  gem 'cucumber'
 end
 
-group :development do 
+group :development do
   gem 'byebug'
 end
 
