@@ -1,8 +1,8 @@
 require_relative '../../app/models/user.rb'
 
 describe User do
-  def expect_not_to_save_user_with_no property
-    user = build(:user, property => "")
+  def expect_not_to_save_user_with_no(attribute)
+    user = build(:user, attribute => "")
     expect(user.save).to be false
   end
 
@@ -13,10 +13,10 @@ describe User do
   end
 
   it 'email is required in order to be saved to the database' do
-    expect_not_to_save_user_with_no :email
+    expect_not_to_save_user_with_no(:email)
   end
 
   it 'password is required in order to be saved to the database' do
-    expect_not_to_save_user_with_no :password_digest
+    expect_not_to_save_user_with_no(:password_digest)
   end
 end
