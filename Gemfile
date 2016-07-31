@@ -1,11 +1,12 @@
 source 'https://rubygems.org'
-ruby '2.2.2'
+ruby '2.2.3'
 
 gem 'sinatra'
 gem 'data_mapper'
 gem 'bcrypt'
 gem 'datamapper'
 gem 'dm-postgres-adapter'
+gem 'rack-flash3'
 
 group :test do
   gem 'rspec'
@@ -17,13 +18,13 @@ group :test do
   gem 'rubocop'
   gem 'coveralls', require: false
   gem 'orderly'
-  gem 'launchy'
   gem 'rack-test'
   gem 'dm-rspec'
   gem 'cucumber'
 end
 
-group :development do
-  gem 'byebug'
+group :development, :test do
+  gem 'launchy'
+  gem 'pry-byebug'
 end
 
